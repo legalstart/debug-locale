@@ -1,4 +1,6 @@
-#!/bin/bash -e
+#!/bin/bash
+
+set -euxo pipefail
 source /dev/stdin <<< "$(curl -s --retry 3 https://lang-common.s3.amazonaws.com/buildpack-stdlib/latest/stdlib.sh)"
 
 BP_DIR=$(cd $(dirname $0)/..; pwd)
@@ -9,7 +11,15 @@ ENV_DIR=$3
 
 echo "Debugging locale"
 
-echo "Current directory:"
 pwd
+ls -a
+ls -a /app/
+ls -a /app/.heroku
+ls -a /app/.heroku/locales
+
+ls -a
+ls -a .heroku
+ls -a .heroku/locales
+
 echo "Trying to import locale"
 python -c "import locale; print(locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8'))"
