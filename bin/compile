@@ -10,16 +10,17 @@ ENV_DIR=$3
 
 
 echo "Debugging locale"
-
 pwd
-ls -a
-ls -a /app/
-ls -a /app/.heroku
-ls -a /app/.heroku/locales
 
-ls -a
-ls -a .heroku
-ls -a .heroku/locales
+echo "Setting up locale"
+language=fr
+pack=fr_FR
+encoding=UTF-8
+localedef -f $encoding -i $pack .heroku/locales/usr/share/locale-langpack/$language/
+export I18NPATH=.heroku/locales/var/lib/locales/supported.d
+export LOCPATH=.heroku/locales/usr/share/locale-langpack/
 
 echo "Trying to import locale"
 python -c "import locale; print(locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8'))"
+
+echo "Yay, success"
