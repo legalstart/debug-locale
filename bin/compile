@@ -1,16 +1,20 @@
 #!/bin/bash
 
 set -euxo pipefail
-source /dev/stdin <<< "$(curl -s --retry 3 https://lang-common.s3.amazonaws.com/buildpack-stdlib/latest/stdlib.sh)"
-
-BP_DIR=$(cd $(dirname $0)/..; pwd)
+# source /dev/stdin <<< "$(curl -s --retry 3 https://lang-common.s3.amazonaws.com/buildpack-stdlib/latest/stdlib.sh)"
+#
+# BP_DIR=$(cd $(dirname $0)/..; pwd)
 BUILD_DIR=$1
-CACHE_DIR=$2
-ENV_DIR=$3
+# CACHE_DIR=$2
+# ENV_DIR=$3
 
 
 echo "Debugging locale"
 pwd
+ls -a
+
+pushd $BUILD_DIR
+ls -a
 
 echo "Setting up locale"
 language=fr
@@ -19,6 +23,9 @@ encoding=UTF-8
 localedef -f $encoding -i $pack .heroku/locales/usr/share/locale-langpack/$language/
 export I18NPATH=.heroku/locales/var/lib/locales/supported.d
 export LOCPATH=.heroku/locales/usr/share/locale-langpack/
+
+popd
+pwd
 
 echo "Trying to import locale"
 python -c "import locale; print(locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8'))"
