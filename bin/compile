@@ -20,9 +20,9 @@ echo "Setting up locale"
 language=fr
 pack=fr_FR
 encoding=UTF-8
-localedef -f $encoding -i $pack .heroku/locales/usr/share/locale-langpack/$language/
-export I18NPATH=.heroku/locales/var/lib/locales/supported.d
-export LOCPATH=.heroku/locales/usr/share/locale-langpack/
+localedef -f $encoding -i $pack $BUILD_DIR/.heroku/locales/usr/share/locale-langpack/$language/
+export I18NPATH=$BUILD_DIR/.heroku/locales/var/lib/locales/supported.d
+export LOCPATH=$BUILD_DIR/.heroku/locales/usr/share/locale-langpack/
 
 popd
 pwd
